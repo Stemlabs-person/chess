@@ -438,6 +438,36 @@ const LESSONS = [
     text: "The king moves one square in any direction. Keep him safe — if he's trapped in check, that's checkmate!",
     fen: "8/8/8/3K4/8/8/8/7k w - - 0 1",
   },
+  {
+    icon: "🏁",
+    title: "Setting Up the Board",
+    text: "Every game starts the same way! Rooks go in the corners, then knights, then bishops, with the queen on her own color and the king next to her. Pawns line up in front. Remember: 'light square on the right'!",
+    fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  },
+  {
+    icon: "⚠️",
+    title: "Check!",
+    text: "When a king is under attack, it's called 'check' — and the king MUST get to safety right away. You can move the king away, block the attack, or capture the attacker. Try getting this king out of check!",
+    fen: "4k3/8/8/8/8/8/4r3/4K3 w - - 0 1",
+  },
+  {
+    icon: "🏰",
+    title: "Castling",
+    text: "Castling is a special move where the king hops two squares toward a rook, and the rook jumps to the other side! It keeps your king safe and gets a rook into the game. Click the king and look for the special castling move.",
+    fen: "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+  },
+  {
+    icon: "👻",
+    title: "En Passant",
+    text: "This sneaky pawn move has a French name meaning 'in passing'! If an enemy pawn zooms past your pawn two squares, you can capture it as if it only moved one. It only works right away. Try it here!",
+    fen: "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+  },
+  {
+    icon: "👑",
+    title: "Pawn Promotion",
+    text: "If a pawn makes it all the way to the other end of the board, it transforms into any piece you want — usually a queen! Move this pawn to the last row and watch it promote.",
+    fen: "k7/4P3/8/8/8/8/8/4K3 w - - 0 1",
+  },
 ];
 
 const lessonsMenu = document.getElementById("lessons-menu");
