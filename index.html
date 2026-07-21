@@ -3,45 +3,75 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KnightSchool Chess</title>
+<title>Pawn Party</title>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
-      <span class="brand-icon">♞</span>
-      <span class="brand-name">KnightSchool</span>
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-icon">♞</span>
+        <span class="brand-name">Pawn Party</span>
+      </div>
+      <nav class="tabs">
+        <button class="tab-btn active" data-view="home">Home</button>
+        <button class="tab-btn" data-view="play">Play</button>
+        <button class="tab-btn" data-view="puzzles">Puzzles</button>
+        <button class="tab-btn" data-view="lessons">Lessons</button>
+      </nav>
     </div>
-    <nav class="tabs">
-      <button class="tab-btn active" data-view="home">Home</button>
-      <button class="tab-btn" data-view="play">Play</button>
-      <button class="tab-btn" data-view="puzzles">Puzzles</button>
-      <button class="tab-btn" data-view="lessons">Lessons</button>
-    </nav>
   </header>
 
   <main>
     <!-- HOME -->
     <section id="view-home" class="view active">
       <div class="hero">
+        <span class="hero-kicker">♟️ Chess for curious kids ♟️</span>
         <h1>Learn. Play. Solve. <span class="accent">Have fun!</span></h1>
-        <p>A friendly place to learn chess, play with a friend, and crack fun puzzles.</p>
+        <p>A friendly place to learn chess, play with a friend, and crack fun puzzles — no account, no ads, just chess.</p>
         <div class="hero-cards">
-          <button class="hero-card" data-goto="play">
+          <button class="hero-card card-pink" data-goto="play">
             <span class="hero-emoji">🤝</span>
             <h3>Play a Friend</h3>
             <p>Two players, one computer. Take turns and battle it out!</p>
+            <span class="hero-cta">Start playing →</span>
           </button>
-          <button class="hero-card" data-goto="puzzles">
+          <button class="hero-card card-blue" data-goto="puzzles">
             <span class="hero-emoji">🧩</span>
             <h3>Puzzles</h3>
             <p>Find the winning move! Fun brain teasers for every level.</p>
+            <span class="hero-cta">Solve puzzles →</span>
           </button>
-          <button class="hero-card" data-goto="lessons">
+          <button class="hero-card card-yellow" data-goto="lessons">
             <span class="hero-emoji">🎓</span>
             <h3>Lessons</h3>
             <p>Short, easy lessons to learn how every piece moves.</p>
+            <span class="hero-cta">Start learning →</span>
           </button>
+        </div>
+
+        <div class="strip">
+          <div class="strip-item">
+            <span class="strip-num">6</span>
+            <span class="strip-label">Piece Lessons</span>
+          </div>
+          <div class="strip-item">
+            <span class="strip-num">5</span>
+            <span class="strip-label">Fun Puzzles</span>
+          </div>
+          <div class="strip-item">
+            <span class="strip-num">2</span>
+            <span class="strip-label">Players, 1 Board</span>
+          </div>
+          <div class="strip-item">
+            <span class="strip-num">∞</span>
+            <span class="strip-label">Rematches</span>
+          </div>
+        </div>
+
+        <div class="tips">
+          <h2>Chess Tip of the Day 💡</h2>
+          <p id="daily-tip">Control the center of the board early — squares d4, d5, e4, and e5 give your pieces the most power!</p>
         </div>
       </div>
     </section>
@@ -114,7 +144,7 @@
     </section>
   </main>
 
-  <footer class="footer">Made for young chess champions ♟️</footer>
+  <footer class="footer">Pawn Party — made for young chess champions ♟️</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chess.js@0.10.3/chess.min.js"></script>
   <script src="script.js"></script>
