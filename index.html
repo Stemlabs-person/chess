@@ -106,6 +106,19 @@
 
     <!-- PUZZLES -->
     <section id="view-puzzles" class="view">
+      <div class="puzzle-toolbar">
+        <div class="streak-badges">
+          <span class="streak-badge">🔥 Streak: <b id="streak-count">0</b></span>
+          <span class="streak-badge best">🏆 Best: <b id="streak-best">0</b></span>
+          <span class="streak-badge">✅ Solved: <b id="solved-count">0</b></span>
+        </div>
+        <div class="diff-filter" id="diff-filter">
+          <button class="diff-btn active" data-diff="all">All</button>
+          <button class="diff-btn" data-diff="easy">Easy</button>
+          <button class="diff-btn" data-diff="medium">Medium</button>
+          <button class="diff-btn" data-diff="hard">Hard</button>
+        </div>
+      </div>
       <div class="puzzles-layout">
         <div class="board-wrap">
           <div id="puzzle-status" class="status-banner">Find the best move!</div>
@@ -113,13 +126,14 @@
           <div class="board-controls">
             <button id="puzzle-hint" class="btn">Hint 💡</button>
             <button id="puzzle-reset" class="btn">Reset Puzzle</button>
+            <button id="puzzle-next" class="btn btn-primary">Next Puzzle →</button>
           </div>
         </div>
         <aside class="side-panel">
+          <span class="diff-pill" id="puzzle-diff">Easy</span>
           <h3 id="puzzle-title">Puzzle 1</h3>
           <p id="puzzle-desc" class="puzzle-desc"></p>
           <div id="puzzle-message" class="puzzle-message"></div>
-          <div class="puzzle-list" id="puzzle-list"></div>
         </aside>
       </div>
     </section>

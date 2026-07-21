@@ -232,6 +232,49 @@ main { padding: 20px 20px 60px; max-width: 1100px; margin: 0 auto; }
 .move-history { padding-left: 20px; max-height: 260px; overflow-y: auto; font-size: 0.95rem; }
 
 /* Puzzles */
+.puzzle-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto 18px;
+}
+.streak-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+.streak-badge {
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.streak-badge.best { color: #b8860b; }
+.diff-filter { display: flex; gap: 6px; background: var(--panel); border-radius: 999px; padding: 4px; box-shadow: var(--shadow); }
+.diff-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.diff-btn:hover { background: #fff1e0; }
+.diff-btn.active { background: var(--accent); color: white; }
+.diff-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.diff-easy { background: #e3f9e5; color: #2e7d32; }
+.diff-medium { background: #fff6d6; color: #b8860b; }
+.diff-hard { background: #ffe3e3; color: var(--primary-dark); }
 .puzzle-desc { color: var(--muted); }
 .puzzle-message {
   min-height: 24px;
@@ -240,19 +283,6 @@ main { padding: 20px 20px 60px; max-width: 1100px; margin: 0 auto; }
 }
 .puzzle-message.success { color: var(--green); }
 .puzzle-message.error { color: var(--primary-dark); }
-.puzzle-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.puzzle-pill {
-  border: none;
-  background: #fff1e0;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-.puzzle-pill.active { background: var(--primary); color: white; }
-.puzzle-pill.solved { background: var(--green); color: white; }
-
 /* Lessons */
 .lessons-grid {
   display: grid;
