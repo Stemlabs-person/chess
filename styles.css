@@ -193,6 +193,8 @@ main { padding: 20px 20px 60px; max-width: 1100px; margin: 0 auto; }
 }
 .square.light { background: var(--light-sq); }
 .square.dark { background: var(--dark-sq); }
+
+#play-board .square { font-size: 2.8rem; }
 .square.selected { background: var(--select) !important; }
 .square.move-target::after {
   content: "";
@@ -318,4 +320,5 @@ main { padding: 20px 20px 60px; max-width: 1100px; margin: 0 auto; }
   .tab-btn { padding: 8px 10px; font-size: 0.85rem; }
   .board { grid-template-columns: repeat(8, minmax(32px, 44px)); grid-template-rows: repeat(8, minmax(32px, 44px)); }
   .square { font-size: 1.5rem; }
+  #play-board .square { font-size: 1.9rem; }
 }
