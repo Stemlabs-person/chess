@@ -18,9 +18,37 @@
         <button class="tab-btn" data-view="play">Play</button>
         <button class="tab-btn" data-view="puzzles">Puzzles</button>
         <button class="tab-btn" data-view="lessons">Lessons</button>
+        <button class="tab-btn" data-view="leaderboard">Leaderboard</button>
       </nav>
+      <button id="profile-badge" class="profile-badge">
+        <span id="profile-badge-avatar" class="profile-badge-avatar">🦁</span>
+        <span id="profile-badge-name" class="profile-badge-name">Player</span>
+      </button>
     </div>
   </header>
+
+  <!-- LOGIN / SIGNUP MODAL -->
+  <div id="profile-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div id="modal-select-screen">
+        <h2>Who's playing? 🎉</h2>
+        <p class="modal-sub">Pick your player, or make a new one!</p>
+        <div id="profile-list" class="profile-list"></div>
+        <button id="show-signup" class="btn btn-primary">+ New Player</button>
+      </div>
+      <div id="modal-signup-screen" class="hidden">
+        <h2>Create Your Player</h2>
+        <p class="modal-sub">Choose a name and pick your avatar!</p>
+        <input id="signup-name" class="name-input" type="text" placeholder="Type your name..." maxlength="16" />
+        <div id="avatar-grid" class="avatar-grid"></div>
+        <div class="modal-actions">
+          <button id="signup-back" class="btn">← Back</button>
+          <button id="signup-create" class="btn btn-primary">Let's Play! →</button>
+        </div>
+        <p id="signup-error" class="signup-error"></p>
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- HOME -->
@@ -154,6 +182,15 @@
             <button id="lesson-next" class="btn btn-primary">Next Lesson →</button>
           </aside>
         </div>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section id="view-leaderboard" class="view">
+      <div class="leaderboard-wrap">
+        <h1 class="leaderboard-title">🏆 Puzzle Leaderboard</h1>
+        <p class="leaderboard-sub">Ranked by best streak. Keep solving puzzles to climb up!</p>
+        <div id="leaderboard-list" class="leaderboard-list"></div>
       </div>
     </section>
   </main>

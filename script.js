@@ -5,12 +5,225 @@ const views = document.querySelectorAll(".view");
 function showView(name) {
   tabButtons.forEach((b) => b.classList.toggle("active", b.dataset.view === name));
   views.forEach((v) => v.classList.toggle("active", v.id === `view-${name}`));
+  if (name === "leaderboard") renderLeaderboard();
 }
 
 tabButtons.forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
 document.querySelectorAll("[data-goto]").forEach((el) =>
   el.addEventListener("click", () => showView(el.dataset.goto))
 );
+
+/* ---------- Profiles (local login / signup) ---------- */
+const AVATARS = ["🦁", "🐯", "🦊", "🐼", "🐸", "🐧", "🦉", "🐢", "🦖", "🦄", "🐶", "🐱", "🐵", "🦋", "🐳", "🐲", "🦕", "🐨"];
+
+const PROFILES_KEY = "pp-profiles";
+const CURRENT_PROFILE_KEY = "pp-current-profile";
+
+function getProfiles() {
+  try {
+    return JSON.parse(localStorage.getItem(PROFILES_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveProfiles(profiles) {
+  localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+}
+
+function getCurrentProfileId() {
+  return localStorage.getItem(CURRENT_PROFILE_KEY);
+}
+
+function setCurrentProfileId(id) {
+  localStorage.setItem(CURRENT_PROFILE_KEY, id);
+}
+
+function getCurrentProfile() {
+  const id = getCurrentProfileId();
+  if (!id) return null;
+  return getProfiles().find((p) => p.id === id) || null;
+}
+
+function updateCurrentProfile(mutator) {
+  const profiles = getProfiles();
+  const id = getCurrentProfileId();
+  const idx = profiles.findIndex((p) => p.id === id);
+  if (idx === -1) return null;
+  mutator(profiles[idx]);
+  saveProfiles(profiles);
+  return profiles[idx];
+}
+
+const profileModal = document.getElementById("profile-modal");
+const modalSelectScreen = document.getElementById("modal-select-screen");
+const modalSignupScreen = document.getElementById("modal-signup-screen");
+const profileListEl = document.getElementById("profile-list");
+const avatarGridEl = document.getElementById("avatar-grid");
+const signupNameEl = document.getElementById("signup-name");
+const signupErrorEl = document.getElementById("signup-error");
+const profileBadge = document.getElementById("profile-badge");
+const profileBadgeAvatar = document.getElementById("profile-badge-avatar");
+const profileBadgeName = document.getElementById("profile-badge-name");
+
+let selectedAvatar = AVATARS[0];
+
+function openModal(forceSignup) {
+  profileModal.classList.remove("hidden");
+  const profiles = getProfiles();
+  if (forceSignup || profiles.length === 0) {
+    showSignupScreen();
+  } else {
+    showSelectScreen();
+  }
+}
+
+function closeModal() {
+  profileModal.classList.add("hidden");
+}
+
+function showSelectScreen() {
+  modalSelectScreen.classList.remove("hidden");
+  modalSignupScreen.classList.add("hidden");
+  renderProfileList();
+}
+
+function showSignupScreen() {
+  modalSelectScreen.classList.add("hidden");
+  modalSignupScreen.classList.remove("hidden");
+  signupNameEl.value = "";
+  signupErrorEl.textContent = "";
+  selectedAvatar = AVATARS[Math.floor(Math.random() * AVATARS.length)];
+  renderAvatarGrid();
+}
+
+function renderProfileList() {
+  const profiles = getProfiles();
+  profileListEl.innerHTML = "";
+  profiles.forEach((p) => {
+    const tile = document.createElement("button");
+    tile.className = "profile-tile";
+    tile.innerHTML = `<span class="avatar-emoji">${p.avatar}</span><span class="profile-name">${p.name}</span><span class="profile-delete" title="Delete player">✕</span>`;
+    tile.addEventListener("click", (e) => {
+      if (e.target.classList.contains("profile-delete")) return;
+      selectProfile(p.id);
+    });
+    tile.querySelector(".profile-delete").addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteProfile(p.id);
+    });
+    profileListEl.appendChild(tile);
+  });
+}
+
+function renderAvatarGrid() {
+  avatarGridEl.innerHTML = "";
+  AVATARS.forEach((a) => {
+    const btn = document.createElement("button");
+    btn.className = "avatar-option" + (a === selectedAvatar ? " selected" : "");
+    btn.textContent = a;
+    btn.addEventListener("click", () => {
+      selectedAvatar = a;
+      renderAvatarGrid();
+    });
+    avatarGridEl.appendChild(btn);
+  });
+}
+
+function selectProfile(id) {
+  setCurrentProfileId(id);
+  closeModal();
+  refreshProfileUI();
+}
+
+function deleteProfile(id) {
+  const profiles = getProfiles().filter((p) => p.id !== id);
+  saveProfiles(profiles);
+  if (getCurrentProfileId() === id) {
+    localStorage.removeItem(CURRENT_PROFILE_KEY);
+  }
+  if (profiles.length === 0) {
+    showSignupScreen();
+  } else {
+    renderProfileList();
+  }
+}
+
+function createProfile() {
+  const name = signupNameEl.value.trim();
+  if (!name) {
+    signupErrorEl.textContent = "Please type a name!";
+    return;
+  }
+  const profiles = getProfiles();
+  const profile = {
+    id: "p" + Date.now() + Math.floor(Math.random() * 10000),
+    name,
+    avatar: selectedAvatar,
+    streak: 0,
+    bestStreak: 0,
+    solvedCount: 0,
+  };
+  profiles.push(profile);
+  saveProfiles(profiles);
+  setCurrentProfileId(profile.id);
+  closeModal();
+  refreshProfileUI();
+}
+
+function refreshProfileUI() {
+  const profile = getCurrentProfile();
+  if (!profile) return;
+  profileBadgeAvatar.textContent = profile.avatar;
+  profileBadgeName.textContent = profile.name;
+  streak = profile.streak || 0;
+  bestStreak = profile.bestStreak || 0;
+  solvedCount = profile.solvedCount || 0;
+  updateStreakUI();
+}
+
+profileBadge.addEventListener("click", () => openModal(false));
+document.getElementById("show-signup").addEventListener("click", () => showSignupScreen());
+document.getElementById("signup-back").addEventListener("click", () => {
+  if (getProfiles().length === 0) return; // must create at least one profile
+  showSelectScreen();
+});
+document.getElementById("signup-create").addEventListener("click", createProfile);
+signupNameEl.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") createProfile();
+});
+
+function renderLeaderboard() {
+  const listEl = document.getElementById("leaderboard-list");
+  const profiles = getProfiles().slice().sort((a, b) => {
+    if (b.bestStreak !== a.bestStreak) return b.bestStreak - a.bestStreak;
+    return b.solvedCount - a.solvedCount;
+  });
+  const currentId = getCurrentProfileId();
+  listEl.innerHTML = "";
+  if (profiles.length === 0) {
+    listEl.innerHTML = '<div class="leaderboard-empty">No players yet — sign up to get on the board! 🏆</div>';
+    return;
+  }
+  const medalClass = ["gold", "silver", "bronze"];
+  profiles.forEach((p, i) => {
+    const row = document.createElement("div");
+    row.className = "leaderboard-row" + (p.id === currentId ? " me" : "");
+    const rankClass = medalClass[i] || "";
+    const rankIcon = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`;
+    row.innerHTML = `
+      <span class="lb-rank ${rankClass}">${rankIcon}</span>
+      <span class="lb-avatar">${p.avatar}</span>
+      <span class="lb-info">
+        <div class="lb-name">${p.name}${p.id === currentId ? " (you)" : ""}</div>
+        <div class="lb-stats">${p.solvedCount || 0} puzzles solved</div>
+      </span>
+      <span class="lb-streak">🔥 ${p.bestStreak || 0}</span>
+    `;
+    listEl.appendChild(row);
+  });
+}
+
 
 /* ---------- Piece symbols ---------- */
 const PIECE_UNICODE = {
@@ -265,9 +478,9 @@ let puzzleBoard;
 let currentDifficulty = "all";
 let shuffleBag = [];
 let currentPuzzle = null;
-let streak = Number(localStorage.getItem("pp-streak") || 0);
-let bestStreak = Number(localStorage.getItem("pp-best-streak") || 0);
-let solvedCount = Number(localStorage.getItem("pp-solved-count") || 0);
+let streak = 0;
+let bestStreak = 0;
+let solvedCount = 0;
 
 const puzzleStatus = document.getElementById("puzzle-status");
 const puzzleTitle = document.getElementById("puzzle-title");
@@ -304,9 +517,11 @@ function updateStreakUI() {
 }
 
 function saveStreak() {
-  localStorage.setItem("pp-streak", streak);
-  localStorage.setItem("pp-best-streak", bestStreak);
-  localStorage.setItem("pp-solved-count", solvedCount);
+  updateCurrentProfile((p) => {
+    p.streak = streak;
+    p.bestStreak = bestStreak;
+    p.solvedCount = solvedCount;
+  });
 }
 
 diffFilterEl.addEventListener("click", (e) => {
@@ -514,3 +729,10 @@ document.getElementById("lesson-next").addEventListener("click", () => {
   const nextIdx = (idx + 1) % LESSONS.length;
   openLesson(nextIdx);
 });
+
+/* ---------- Boot: require a profile before play ---------- */
+if (!getCurrentProfile()) {
+  openModal(false);
+} else {
+  refreshProfileUI();
+}
