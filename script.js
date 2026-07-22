@@ -1011,7 +1011,7 @@ const LESSONS = [
     fen: "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
   },
   {
-    icon: "👻",
+    icon: "🥷",
     title: "En Passant",
     text: "This sneaky pawn move has a French name meaning 'in passing'! If an enemy pawn zooms past your pawn two squares, you can capture it as if it only moved one. It only works right away. Try it here!",
     fen: "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
