@@ -243,6 +243,28 @@ function squareId(file, rank) {
   return `${FILES[file]}${rank}`;
 }
 
+/* ---------- Promotion picker ---------- */
+const promotionModal = document.getElementById("promotion-modal");
+const promotionChoicesEl = document.getElementById("promotion-choices");
+
+function choosePromotionPiece(color) {
+  return new Promise((resolve) => {
+    const options = ["q", "r", "b", "n"];
+    promotionChoicesEl.innerHTML = "";
+    options.forEach((type) => {
+      const btn = document.createElement("button");
+      btn.className = "promotion-choice";
+      btn.textContent = PIECE_UNICODE[color + type];
+      btn.addEventListener("click", () => {
+        promotionModal.classList.add("hidden");
+        resolve(type);
+      });
+      promotionChoicesEl.appendChild(btn);
+    });
+    promotionModal.classList.remove("hidden");
+  });
+}
+
 /* ---------- Generic Board Renderer ---------- */
 class BoardUI {
   constructor(containerEl, game, opts = {}) {
@@ -361,9 +383,11 @@ class BoardUI {
     });
   }
 
-  attemptMove(from, to, matchedMove) {
+  async attemptMove(from, to, matchedMove) {
     let promotion;
-    if (matchedMove.flags.includes("p")) promotion = "q"; // auto-promote to queen for simplicity
+    if (matchedMove.flags.includes("p")) {
+      promotion = await choosePromotionPiece(this.game.turn());
+    }
     const move = this.game.move({ from, to, promotion });
     this.clearHighlights();
     this.selected = null;
