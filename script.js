@@ -767,8 +767,11 @@ const DIFF_LABEL = { easy: "Easy", medium: "Medium", hard: "Hard" };
 let puzzleGame;
 let puzzleBoard;
 let currentDifficulty = "all";
-let shuffleBag = [];
+let puzzleIndex = 0;
 let currentPuzzle = null;
+
+const DIFF_ORDER = { easy: 0, medium: 1, hard: 2 };
+const ORDERED_PUZZLES = PUZZLES.slice().sort((a, b) => DIFF_ORDER[a.d] - DIFF_ORDER[b.d]);
 let streak = 0;
 let bestStreak = 0;
 let solvedCount = 0;
@@ -783,22 +786,16 @@ const streakBestEl = document.getElementById("streak-best");
 const solvedCountEl = document.getElementById("solved-count");
 const diffFilterEl = document.getElementById("diff-filter");
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function pool() {
-  return currentDifficulty === "all" ? PUZZLES : PUZZLES.filter((p) => p.d === currentDifficulty);
+  return currentDifficulty === "all" ? ORDERED_PUZZLES : ORDERED_PUZZLES.filter((p) => p.d === currentDifficulty);
 }
 
-function nextFromBag() {
-  if (shuffleBag.length === 0) shuffleBag = shuffle(pool());
-  return shuffleBag.pop();
+function nextInOrder() {
+  const list = pool();
+  if (puzzleIndex >= list.length) puzzleIndex = 0;
+  const p = list[puzzleIndex];
+  puzzleIndex += 1;
+  return p;
 }
 
 function updateStreakUI() {
@@ -820,12 +817,12 @@ diffFilterEl.addEventListener("click", (e) => {
   if (!btn) return;
   currentDifficulty = btn.dataset.diff;
   diffFilterEl.querySelectorAll(".diff-btn").forEach((b) => b.classList.toggle("active", b === btn));
-  shuffleBag = [];
+  puzzleIndex = 0;
   loadNextPuzzle();
 });
 
 function loadNextPuzzle() {
-  currentPuzzle = nextFromBag();
+  currentPuzzle = nextInOrder();
   const p = currentPuzzle;
   puzzleGame = new Chess(p.fen);
   const orientation = puzzleGame.turn() === "w" ? "white" : "black";
