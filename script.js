@@ -176,9 +176,15 @@ function refreshProfileUI() {
   if (!profile) return;
   profileBadgeAvatar.textContent = profile.avatar;
   profileBadgeName.textContent = profile.name;
-  streak = profile.streak || 0;
+  // Every login/session start resets the current streak and solved count.
+  // Best streak (for the leaderboard) is preserved.
+  streak = 0;
+  solvedCount = 0;
   bestStreak = profile.bestStreak || 0;
-  solvedCount = profile.solvedCount || 0;
+  updateCurrentProfile((p) => {
+    p.streak = 0;
+    p.solvedCount = 0;
+  });
   updateStreakUI();
 }
 
