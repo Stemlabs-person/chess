@@ -19,6 +19,7 @@
         <button class="tab-btn" data-view="puzzles">Puzzles</button>
         <button class="tab-btn" data-view="lessons">Lessons</button>
         <button class="tab-btn" data-view="leaderboard">Leaderboard</button>
+        <button class="tab-btn" data-view="rules">Rule Book</button>
       </nav>
       <button id="profile-badge" class="profile-badge">
         <span id="profile-badge-avatar" class="profile-badge-avatar">🦁</span>
@@ -181,6 +182,68 @@
             <p id="lesson-text"></p>
             <button id="lesson-next" class="btn btn-primary">Next Lesson →</button>
           </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- RULE BOOK -->
+    <section id="view-rules" class="view">
+      <div class="rules-wrap">
+        <h1 class="rules-title">📖 The Rule Book</h1>
+        <p class="rules-sub">Everything you need to know to play chess — in plain, simple words!</p>
+
+        <div class="rule-card">
+          <h2>🎯 The Goal</h2>
+          <p>Chess is a game for two players. Each player has an army of pieces. Your job is to trap the other player's <strong>king</strong> so it can't escape — that's called <strong>checkmate</strong>, and it wins the game!</p>
+        </div>
+
+        <div class="rule-card">
+          <h2>🏁 Setting Up</h2>
+          <p>Each player starts with 16 pieces: 1 king, 1 queen, 2 rooks, 2 bishops, 2 knights, and 8 pawns. White always moves first, then players take turns — one move each.</p>
+        </div>
+
+        <div class="rule-card">
+          <h2>♟️ How Each Piece Moves</h2>
+          <div class="rule-grid">
+            <div class="rule-piece"><span class="rule-icon">♙</span><strong>Pawn</strong><span>Moves straight ahead 1 square (2 on its very first move). Captures diagonally, one square.</span></div>
+            <div class="rule-piece"><span class="rule-icon">♘</span><strong>Knight</strong><span>Moves in an "L" shape — 2 squares one way, then 1 square sideways. It can jump over pieces!</span></div>
+            <div class="rule-piece"><span class="rule-icon">♗</span><strong>Bishop</strong><span>Slides diagonally, as far as it wants. Stays on one color forever.</span></div>
+            <div class="rule-piece"><span class="rule-icon">♖</span><strong>Rook</strong><span>Slides in straight lines — up, down, left, or right — as far as it wants.</span></div>
+            <div class="rule-piece"><span class="rule-icon">♕</span><strong>Queen</strong><span>The strongest piece! Moves like a rook and a bishop combined.</span></div>
+            <div class="rule-piece"><span class="rule-icon">♔</span><strong>King</strong><span>Moves just 1 square in any direction. Protect him — he's the most important piece!</span></div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <h2>⚠️ Check, Checkmate &amp; Stalemate</h2>
+          <ul class="rule-list">
+            <li><strong>Check</strong> — the king is under attack! That player must move out of danger right away.</li>
+            <li><strong>Checkmate</strong> — the king is under attack AND has no way to escape. Game over — that player loses!</li>
+            <li><strong>Stalemate</strong> — the player to move has no legal moves, but their king is NOT in check. The game ends in a draw (nobody wins).</li>
+          </ul>
+        </div>
+
+        <div class="rule-card">
+          <h2>✨ Three Special Moves</h2>
+          <ul class="rule-list">
+            <li><strong>Castling</strong> — the king hops 2 squares toward a rook, and the rook jumps to the other side. Keeps the king safe! You can only do this if neither piece has moved yet, and the king isn't in check.</li>
+            <li><strong>En Passant</strong> — a sneaky pawn trick! If an enemy pawn zooms past yours by moving 2 squares, you can capture it as if it only moved 1 — but only right away, on your very next move.</li>
+            <li><strong>Promotion</strong> — if a pawn reaches the very last row, it transforms into any piece you want (usually a queen)!</li>
+          </ul>
+        </div>
+
+        <div class="rule-card">
+          <h2>🤝 Good Chess Manners</h2>
+          <ul class="rule-list">
+            <li>Once you let go of a piece, that move counts — think before you move!</li>
+            <li>Take turns and be patient while your friend is thinking.</li>
+            <li>Say "good game" at the end, win or lose. It's just a game — have fun!</li>
+          </ul>
+        </div>
+
+        <div class="rule-card tip-card">
+          <h2>💡 Ready to Practice?</h2>
+          <p>Head over to the <strong>Lessons</strong> tab to try out each move on a real board, or jump into <strong>Puzzles</strong> to test what you've learned!</p>
         </div>
       </div>
     </section>
