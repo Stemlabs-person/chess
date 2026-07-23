@@ -6,6 +6,15 @@ function showView(name) {
   tabButtons.forEach((b) => b.classList.toggle("active", b.dataset.view === name));
   views.forEach((v) => v.classList.toggle("active", v.id === `view-${name}`));
   if (name === "leaderboard") renderLeaderboard();
+  if (name !== "lessons") {
+    document.body.classList.remove("modal-open");
+    const lessonDetailEl = document.getElementById("lesson-detail");
+    const lessonsMenuEl = document.getElementById("lessons-menu");
+    if (lessonDetailEl && lessonsMenuEl) {
+      lessonDetailEl.classList.add("hidden");
+      lessonsMenuEl.classList.remove("hidden");
+    }
+  }
 }
 
 tabButtons.forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
@@ -1043,6 +1052,7 @@ function openLesson(i) {
   const lesson = LESSONS[i];
   lessonsMenu.classList.add("hidden");
   lessonDetail.classList.remove("hidden");
+  document.body.classList.add("modal-open");
   lessonTitle.textContent = lesson.title;
   lessonText.textContent = lesson.text;
   lessonGame = new Chess(lesson.fen);
@@ -1064,6 +1074,7 @@ function openLesson(i) {
 document.getElementById("lesson-back").addEventListener("click", () => {
   lessonDetail.classList.add("hidden");
   lessonsMenu.classList.remove("hidden");
+  document.body.classList.remove("modal-open");
 });
 
 document.getElementById("lesson-next").addEventListener("click", () => {
