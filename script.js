@@ -1031,6 +1031,42 @@ const LESSONS = [
     text: "If a pawn makes it all the way to the other end of the board, it transforms into any piece you want — usually a queen! Move this pawn to the last row and watch it promote.",
     fen: "k7/4P3/8/8/8/8/8/4K3 w - - 0 1",
   },
+  {
+    icon: "🎯",
+    title: "Control the Center",
+    text: "The four squares in the very middle of the board (d4, d5, e4, e5) are the most powerful ones — pieces placed there can reach more of the board! Strong players usually push a center pawn on their first move to start claiming that space. Try moving a pawn toward the middle!",
+    fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  },
+  {
+    icon: "🚀",
+    title: "Develop Your Pieces",
+    text: "'Developing' means bringing your knights and bishops out from the back row early so they're ready for action. Try not to bring your queen out too soon — she can get chased around by smaller pieces and waste time! Practice developing a knight or bishop here.",
+    fen: "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+  },
+  {
+    icon: "💎",
+    title: "Piece Values",
+    text: "Not all pieces are worth the same! Pawns are worth 1 point, knights and bishops are worth 3, rooks are worth 5, and the queen is worth 9 — the king is priceless since losing him ends the game. Before trading pieces, ask: am I getting equal value back?",
+    fen: "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+  },
+  {
+    icon: "📌",
+    title: "The Pin",
+    text: "A pin happens when a piece can't move because it's shielding something more valuable behind it — often the king! Try clicking the knight: it has nowhere to go, because moving it would expose its own king to the rook's attack. That's a pin!",
+    fen: "4k3/8/4n3/8/8/8/8/4R2K b - - 0 1",
+  },
+  {
+    icon: "🍴",
+    title: "The Fork",
+    text: "A fork is when one piece attacks two enemy pieces at the same time — and the enemy can only save one! Move the knight so it attacks the king and the rook at once. One move, two threats — that's the power of a fork!",
+    fen: "r3k3/8/8/1N6/8/8/8/4K3 w - - 0 1",
+  },
+  {
+    icon: "💥",
+    title: "Discovered Attack",
+    text: "A discovered attack happens when you move one piece out of the way and it reveals an attack from a piece hiding behind it! Move the knight aside and watch a surprise check appear from the rook behind it.",
+    fen: "k7/8/8/8/N7/8/8/R3K3 w - - 0 1",
+  },
 ];
 
 const lessonsMenu = document.getElementById("lessons-menu");
