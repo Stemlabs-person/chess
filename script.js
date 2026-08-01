@@ -282,6 +282,7 @@ class BoardUI {
     this.orientation = opts.orientation || "white"; // 'white' or 'black'
     this.onUserMove = opts.onUserMove || (() => {});
     this.interactive = opts.interactive !== false;
+    this.lockAfterMove = opts.lockAfterMove || false;
     this.selected = null;
     this.lastMove = opts.lastMove || null;
     this.render();
@@ -402,6 +403,7 @@ class BoardUI {
     this.selected = null;
     if (move) {
       this.lastMove = { from, to };
+      if (this.lockAfterMove) this.interactive = false;
       this.onUserMove(move);
     }
     this.render();
@@ -1018,18 +1020,24 @@ const LESSONS = [
     title: "Castling",
     text: "Castling is a special move where the king hops two squares toward a rook, and the rook jumps to the other side! It keeps your king safe and gets a rook into the game. Click the king and look for the special castling move.",
     fen: "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+    solution: ["O-O", "O-O-O"],
+    successText: "Yes! That's castling — the king and rook moved together to safety! 🎉",
   },
   {
     icon: "🥷",
     title: "En Passant",
     text: "This sneaky pawn move has a French name meaning 'in passing'! If an enemy pawn zooms past your pawn two squares, you can capture it as if it only moved one. It only works right away. Try it here!",
     fen: "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+    solution: ["exd6"],
+    successText: "Yes! That's en passant — you captured the pawn as it passed by! 🎉",
   },
   {
     icon: "👑",
     title: "Pawn Promotion",
     text: "If a pawn makes it all the way to the other end of the board, it transforms into any piece you want — usually a queen! Move this pawn to the last row and watch it promote.",
     fen: "k7/4P3/8/8/8/8/8/4K3 w - - 0 1",
+    solution: ["e8=Q+", "e8=R+", "e8=B", "e8=N"],
+    successText: "Yes! Your pawn promoted! 🎉",
   },
   {
     icon: "🎯",
@@ -1102,6 +1110,7 @@ function openLesson(i) {
 
   if (!lessonBoard) {
     lessonBoard = new BoardUI(document.getElementById("lesson-board"), lessonGame, {
+      lockAfterMove: true,
       onUserMove: (move) => {
         if (currentLesson.solution) {
           if (currentLesson.solution.includes(move.san)) {
@@ -1117,6 +1126,7 @@ function openLesson(i) {
   } else {
     lessonBoard.game = lessonGame;
     lessonBoard.lastMove = null;
+    lessonBoard.interactive = true;
     lessonBoard.render();
   }
 }
