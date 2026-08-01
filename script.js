@@ -1060,12 +1060,16 @@ const LESSONS = [
     title: "The Fork",
     text: "A fork is when one piece attacks two enemy pieces at the same time — and the enemy can only save one! Move the knight so it attacks the king and the rook at once. One move, two threats — that's the power of a fork!",
     fen: "r3k3/8/8/1N6/8/8/8/4K3 w - - 0 1",
+    solution: ["Nc7+"],
+    successText: "Yes! That's a fork — the knight attacks the king AND the rook at once! 🎉",
   },
   {
     icon: "💥",
     title: "Discovered Attack",
     text: "A discovered attack happens when you move one piece out of the way and it reveals an attack from a piece hiding behind it! Move the knight aside and watch a surprise check appear from the rook behind it.",
     fen: "k7/8/8/8/N7/8/8/R3K3 w - - 0 1",
+    solution: ["Nb6+", "Nc5+", "Nc3+", "Nb2+"],
+    successText: "Yes! Moving the knight revealed the rook's check — that's a discovered attack! 🎉",
   },
 ];
 
@@ -1075,6 +1079,7 @@ const lessonTitle = document.getElementById("lesson-title");
 const lessonText = document.getElementById("lesson-text");
 const lessonStatus = document.getElementById("lesson-status");
 let lessonBoard, lessonGame;
+let currentLesson = null;
 
 LESSONS.forEach((lesson, i) => {
   const card = document.createElement("button");
@@ -1086,18 +1091,27 @@ LESSONS.forEach((lesson, i) => {
 
 function openLesson(i) {
   const lesson = LESSONS[i];
+  currentLesson = lesson;
   lessonsMenu.classList.add("hidden");
   lessonDetail.classList.remove("hidden");
   document.body.classList.add("modal-open");
   lessonTitle.textContent = lesson.title;
   lessonText.textContent = lesson.text;
   lessonGame = new Chess(lesson.fen);
-  lessonStatus.textContent = "Try moving the highlighted piece!";
+  lessonStatus.textContent = lesson.solution ? "Find the move that shows it!" : "Try moving the highlighted piece!";
 
   if (!lessonBoard) {
     lessonBoard = new BoardUI(document.getElementById("lesson-board"), lessonGame, {
-      onUserMove: () => {
-        lessonStatus.textContent = "Nice move! Try another. 🎉";
+      onUserMove: (move) => {
+        if (currentLesson.solution) {
+          if (currentLesson.solution.includes(move.san)) {
+            lessonStatus.textContent = currentLesson.successText || "Yes! That's it! 🎉";
+          } else {
+            lessonStatus.textContent = "❌ Not quite the right move — try again!";
+          }
+        } else {
+          lessonStatus.textContent = "Nice move! Try another. 🎉";
+        }
       },
     });
   } else {
